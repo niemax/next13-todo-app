@@ -1,7 +1,0 @@
-{
-  "extends": ["airbnb", "airbnb-typescript", "next", "prettier"],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "ignorePatterns": ["**/*.js", "**/*.jsx"]
-}

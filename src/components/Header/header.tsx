@@ -1,14 +1,13 @@
 "use client";
 
-import { Navbar, Button, Link, Text, Card, Radio } from "@nextui-org/react";
+import { Navbar, Text, Avatar } from "@nextui-org/react";
 
 import React from "react";
-import SignOut from "../Button/button.components";
+import SignOut from "../Button/button-components";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
-  const [variant, setVariant] = React.useState("static");
-
-  const variants = ["static", "floating", "sticky"];
+  const session = useSession();
 
   return (
     <>
@@ -20,6 +19,12 @@ export default function Header() {
         </Navbar.Brand>
 
         <Navbar.Content>
+          <Navbar.Item>
+            <Avatar
+              src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+              size="md"
+            />
+          </Navbar.Item>
           <Navbar.Item>
             <SignOut />
           </Navbar.Item>

@@ -16,6 +16,8 @@ model Todo {
   description String?
   completed   Boolean  @default(false)
   createdAt   DateTime @default(now())
+  author      User?    @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 model Account {
@@ -53,6 +55,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  todos         Todo[]
 }
 
 model VerificationToken {

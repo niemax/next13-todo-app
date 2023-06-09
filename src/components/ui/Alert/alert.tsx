@@ -1,3 +1,5 @@
+"use client"
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,12 +11,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/shadcn/alert-dialog"
+import { deleteTodo } from "../Modal/actions"
+import { Dispatch, SetStateAction } from "react"
 
 interface AlertProps {
+  todoID: string
   children: React.ReactNode
+  setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Alert({ children }: AlertProps) {
+export default function Alert({ todoID, children, setOpen }: AlertProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -28,7 +34,14 @@ export default function Alert({ children }: AlertProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction
+            onClick={() => {
+              deleteTodo(todoID)
+              setOpen(false)
+            }}
+          >
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -2,7 +2,7 @@
 
 import { Navbar, Text, Avatar, Dropdown } from "@nextui-org/react"
 
-import React, { Suspense } from "react"
+import React from "react"
 import { signOut, useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
 

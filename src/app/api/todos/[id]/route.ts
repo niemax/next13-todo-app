@@ -1,9 +1,5 @@
-import { NextRequest, NextResponse } from "next/server"
-import prisma from "../../../../../prisma/prisma"
-
-export async function GET(request: Request) {
-  return NextResponse.json("Hello from specific todo")
-}
+import { NextResponse } from "next/server"
+import prisma from "../../../../prisma/prisma"
 
 export async function PATCH(request: Request) {
   const { searchParams } = new URL(request.url)

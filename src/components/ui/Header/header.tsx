@@ -1,6 +1,6 @@
 "use client"
 
-import { Navbar, Text, Avatar, Dropdown } from "@nextui-org/react"
+import { Navbar, Text, Avatar, Dropdown, Link } from "@nextui-org/react"
 
 import React from "react"
 import { signOut, useSession } from "next-auth/react"
@@ -15,9 +15,7 @@ export default function Header() {
     <>
       <Navbar variant="static">
         <Navbar.Brand>
-          <Text b color="inherit" hideIn="xs">
-            TODO APP
-          </Text>
+          <Link href="/">TODO APP</Link>
         </Navbar.Brand>
         <Navbar.Content>
           <Navbar.Item>

@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/shadcn/alert-dialog"
-import { deleteTodo } from "../Modal/actions"
+import { deleteTodo } from "../../../lib/db-actions"
 import { Dispatch, SetStateAction } from "react"
 
 interface AlertProps {

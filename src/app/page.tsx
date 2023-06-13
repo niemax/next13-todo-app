@@ -11,6 +11,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/shadcn/tabs"
+import { Metadata } from "next"
 
 export type Todo = {
   id: string
@@ -20,10 +21,19 @@ export type Todo = {
   createdAt: Date
 }
 
+export const metadata: Metadata = {
+  title: "A simple todo app using NextJS 13.4 and Postgres",
+  description: "This is a simple Todo app.",
+}
+
+//const FIFTEEN_SECONDS = 15 * 1000
+//export const revalidate = FIFTEEN_SECONDS
+
 async function getData() {
+  console.log("fethcing data")
   const res = await fetch(process.env.URL + "/api/todos", {
     method: "GET",
-    cache: "no-store",
+    cache: "no-cache",
   })
 
   // Recommendation: handle errors

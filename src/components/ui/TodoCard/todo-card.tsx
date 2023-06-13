@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/shadcn/card"
 import type { Todo } from "@prisma/client"
-import Modal from "../Modal/modal"
+import Link from "next/link"
 
 interface TodoCardProps {
   todo: Todo
@@ -16,14 +16,7 @@ interface TodoCardProps {
 
 export default function TodoCard({ todo }: TodoCardProps) {
   return (
-    <Modal
-      id={todo.id}
-      title={todo.title}
-      description={todo.description as string}
-      completed={todo.completed}
-      action="edit"
-      aria-label="todo-card"
-    >
+    <Link key={todo.id} href={`/details/${todo.id}`}>
       <Card
         key={todo.id}
         className="drop-shadow-lg hover:scale-110 transform transition-all duration-200 ease-in-out"
@@ -44,6 +37,6 @@ export default function TodoCard({ todo }: TodoCardProps) {
           </p>
         </CardFooter>
       </Card>
-    </Modal>
+    </Link>
   )
 }

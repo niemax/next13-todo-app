@@ -7,8 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/shadcn/card"
-import type { Todo } from "@prisma/client"
 import Link from "next/link"
+import { Todo } from "@/app/page"
 
 interface TodoCardProps {
   todo: Todo

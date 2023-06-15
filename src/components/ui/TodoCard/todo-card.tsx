@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/shadcn/card"
 import Link from "next/link"
-import { Todo } from "@/app/page"
+import type { Todo } from "@/app/page"
 
 interface TodoCardProps {
   todo: Todo

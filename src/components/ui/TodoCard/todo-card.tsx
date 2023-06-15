@@ -15,6 +15,8 @@ interface TodoCardProps {
 }
 
 export default function TodoCard({ todo }: TodoCardProps) {
+  const date = new Date(todo.createdAt)
+  const formattedDate = new Intl.DateTimeFormat("fi-FI").format(date)
   return (
     <Link key={todo.id} href={`/details/${todo.id}`}>
       <Card
@@ -23,6 +25,7 @@ export default function TodoCard({ todo }: TodoCardProps) {
       >
         <CardHeader>
           <CardTitle>{todo.title}</CardTitle>
+          <p className="text-xs text-gray-400">{formattedDate}</p>
         </CardHeader>
         <CardContent>
           <CardDescription>{todo.description}</CardDescription>

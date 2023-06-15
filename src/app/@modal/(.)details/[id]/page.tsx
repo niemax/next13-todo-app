@@ -1,8 +1,14 @@
 import Modal from "@/components/ui/Modal/modal"
 import { getCurrentTodo } from "@/lib/db-actions"
 
-export default async function DetailsModal({ params }: any) {
-  const todo = await getCurrentTodo(params.id)
+interface Props {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default async function DetailsModal({ params: { id } }: Props) {
+  const todo = await getCurrentTodo(id)
+
   if (!todo) {
     throw new Error("No todo found!")
   }
@@ -14,7 +20,7 @@ export default async function DetailsModal({ params }: any) {
       description={todo.description as string}
       completed={todo.completed}
       action="edit"
-      isOpen={true}
+      isOpen
     />
   )
 }

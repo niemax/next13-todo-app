@@ -13,6 +13,7 @@ import {
 } from "@/components/shadcn/alert-dialog"
 import { deleteTodo } from "../../../lib/db-actions"
 import { Dispatch, SetStateAction } from "react"
+import { useRouter } from "next/navigation"
 
 interface AlertProps {
   todoID: string
@@ -21,6 +22,7 @@ interface AlertProps {
 }
 
 export default function Alert({ todoID, children, setOpen }: AlertProps) {
+  const router = useRouter()
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -37,7 +39,7 @@ export default function Alert({ todoID, children, setOpen }: AlertProps) {
           <AlertDialogAction
             onClick={() => {
               deleteTodo(todoID)
-              setOpen(false)
+              router.back()
             }}
           >
             Continue

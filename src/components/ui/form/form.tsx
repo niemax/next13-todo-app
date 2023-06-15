@@ -1,7 +1,7 @@
 "use client"
 
 import { createTodo, toggleTodoComplete, updateTodo } from "@/lib/db-actions"
-import React, { ReactNode, useState } from "react"
+import React, { useState } from "react"
 import { ActionType } from "../Modal/modal"
 import { Label } from "@/components/shadcn/label"
 import { Input } from "@/components/shadcn/input"
@@ -17,6 +17,7 @@ interface FormProps {
   title: string
   description: string
   completed?: boolean
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function Form({
@@ -25,6 +26,7 @@ export default function Form({
   title,
   description,
   completed,
+  setModalOpen,
 }: FormProps) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -32,7 +34,7 @@ export default function Form({
   async function handleFormSubmission(formData: FormData) {
     switch (action) {
       case "new":
-        return createTodo(formData).then(() => setOpen(false))
+        return createTodo(formData).then(() => setModalOpen?.(false))
       case "edit":
         return updateTodo(id, formData).then(() => router.back())
     }
@@ -78,21 +80,25 @@ export default function Form({
         </Button>
       </div>
       <div className="mt-10 flex flex-row justify-between items-center">
-        <Alert todoID={id} setOpen={setOpen}>
-          <Button variant="destructive">
-            <Trash2 className="mr-2 h-4 w-4" /> Delete todo
-          </Button>
-        </Alert>
-        <Button
-          variant={completed ? "secondary" : "outline"}
-          type="button"
-          onClick={() => {
-            toggleTodoComplete(id)
-            setOpen(false)
-          }}
-        >
-          Mark as {completed ? "incomplete" : "complete"}
-        </Button>
+        {action === "edit" ? (
+          <>
+            <Alert todoID={id} setOpen={setOpen}>
+              <Button variant="destructive">
+                <Trash2 className="mr-2 h-4 w-4" /> Delete todo
+              </Button>
+            </Alert>
+            <Button
+              variant={completed ? "secondary" : "outline"}
+              type="button"
+              onClick={() => {
+                toggleTodoComplete(id)
+                router.back()
+              }}
+            >
+              Mark as {completed ? "incomplete" : "complete"}
+            </Button>
+          </>
+        ) : null}
       </div>
     </form>
   )

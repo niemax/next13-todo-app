@@ -2,9 +2,6 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "../lib/auth"
 import { redirect } from "next/navigation"
 import TodoCard from "@/components/ui/TodoCard/todo-card"
-import Modal from "@/components/ui/Modal/modal"
-import { Plus } from "lucide-react"
-import { Button } from "@/components/shadcn/button"
 import {
   Tabs,
   TabsContent,
@@ -12,6 +9,7 @@ import {
   TabsTrigger,
 } from "@/components/shadcn/tabs"
 import { Metadata } from "next"
+import { Suspense } from "react"
 
 export type Todo = {
   id: string
@@ -26,17 +24,11 @@ export const metadata: Metadata = {
   description: "This is a simple Todo app.",
 }
 
-//const FIFTEEN_SECONDS = 15 * 1000
-//export const revalidate = FIFTEEN_SECONDS
-
 async function getData() {
-  console.log("fethcing data")
   const res = await fetch(process.env.URL + "/api/todos", {
     method: "GET",
-    cache: "no-cache",
   })
 
-  // Recommendation: handle errors
   if (!res.ok) {
     throw new Error("Failed to fetch data")
   }
@@ -57,15 +49,20 @@ export default async function Home() {
 
   return (
     <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div>
+          <h1 className="text-3xl font-bold">Hello, {session?.user?.name}</h1>
+        </div>
+      </Suspense>
       <Tabs defaultValue="undone">
-        <div className="w-full flex place-items-center flex-col">
+        <div className="w-full flex place-items-center flex-col mt-20">
           <TabsList className="mb-10">
             <TabsTrigger value="undone">Not completed</TabsTrigger>
             <TabsTrigger value="completed">Completed</TabsTrigger>
           </TabsList>
         </div>
         <TabsContent value="undone">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 gap-2 md:gap-6 md:grid-cols-4">
             {undoneTodos.map((todo: Todo) => (
               <TodoCard todo={todo as any} />
             ))}
@@ -79,17 +76,6 @@ export default async function Home() {
           </div>
         </TabsContent>
       </Tabs>
-
-      <Modal id="" title="" description="" completed={false} action="new">
-        <div className="mt-10">
-          <Button
-            type="button"
-            className="rounded-full bg-green-400 w-[60px] h-[60px] drop-shadow-xl"
-          >
-            <Plus className="h-8 w-8" />
-          </Button>
-        </div>
-      </Modal>
     </div>
   )
 }

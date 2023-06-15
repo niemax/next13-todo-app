@@ -8,8 +8,8 @@ import {
   DialogTrigger,
 } from "@/components/shadcn/dialog"
 import { useState } from "react"
-import { experimental_useFormStatus as useFormStatus } from "react-dom"
 import Form from "../form/form"
+import { useRouter } from "next/navigation"
 
 export type ActionType = "new" | "edit"
 
@@ -33,14 +33,22 @@ export default function Modal({
   children,
 }: ModalProps) {
   const [open, setOpen] = useState(isOpen)
-  const { pending } = useFormStatus()
+  const router = useRouter()
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open)
+        !open && action === "edit" && router.back()
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Details</DialogTitle>
+          <DialogTitle>
+            {action === "edit" ? "Details" : "New todo"}
+          </DialogTitle>
         </DialogHeader>
         <Form
           action={action}
@@ -48,6 +56,7 @@ export default function Modal({
           title={title}
           description={description}
           completed={completed}
+          setModalOpen={setOpen}
         />
       </DialogContent>
     </Dialog>

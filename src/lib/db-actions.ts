@@ -16,7 +16,6 @@ export async function getCurrentTodo(todoID: string) {
 }
 
 export async function updateTodo(todoID: string, formData: FormData) {
-  // CODE
   const currentTodo: any = getCurrentTodo(todoID as string)
 
   try {
@@ -66,7 +65,6 @@ export async function createTodo(formData: FormData) {
 
 export async function toggleTodoComplete(todoID: string) {
   const currentTodo = await getCurrentTodo(todoID as string)
-  console.log("currentTodo", currentTodo)
 
   try {
     await prisma.todo.update({
